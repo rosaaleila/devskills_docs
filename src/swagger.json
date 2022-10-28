@@ -1,0 +1,194 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "DevSkills API",
+        "description": "API desenvolvida para o projeto DevSkills, oferecendo os serviços necessários para construção da plataforma.",
+        "version": "1.0.0"
+    },
+    "paths":{
+        "/developer":{
+            "post":{
+                "summary": "Cadastro de Usuário Desenvolvedor",
+                "description": "Rota responsável pela criação de um novo desenvolvedor",
+                "tags": ["Developer"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/Developer"
+                            },
+                            "examples":{
+                                "Developer":{
+                                    "value": {
+                                        "nome": "Marcel Teixeira",
+                                        "email": "grande_dba@php.com",
+                                        "cpf": "123.456.780-99",
+                                        "senha": "Senai@127",
+                                        "confirmar_senha": "Senai@127",
+                                        "data_nascimento": "08/08/2010",
+                                        "permissao_email": false,
+                                        "ddd": "11",
+                                        "numero":"953245-8080",
+                                        "id_tipo_telefone": 1,
+                                        "id_genero": 2,
+                                        "ids_stacks": [2,3],
+                                        "ids_habilidades": [1, 2, 3]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200": {
+                        "description": "Requisição feita com sucesso.",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/components/responses/SuccessfulResponse"
+                                },
+                                "examples":{
+                                    "SuccessfulResponse":{
+                                        "value":{
+                                            "message": "Usuário cadastrado com sucesso."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Requisição falha. CPF ou EMAIL já existentes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/responses/ErrorResponse"
+                                },
+                                "examples": {
+                                    "UserAlreadyExists": {
+                                        "value": {
+                                            "error": "O usuário já existe no sistema"
+                                        }
+                                    },
+                                    "PasswordError": {
+                                        "value": {
+                                            "error": "Senha inválida"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/developer/login": {
+            "post": {
+                "summary": "Login do Usuário Desenvolvedor",
+                "description": "Rota responsável pelo login de um usuário desenvolvedor já existente.",
+                "tags": ["Developer"],
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/DeveloperLogin"
+                            },
+                            "examples":{
+                                "DeveloperLogin":{
+                                    "value":{
+                                        "login": "grande_dba@php.com",
+                                        "senha": "Senai@127"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+       "components":{
+        "responses":{
+            "SuccessfulResponse": {
+                "type":"object",
+                "properties":{
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    }
+                }
+            }
+
+        },
+            "schemas":{
+                "Developer":{
+                    "type": "object",
+                    "properties":{
+                        "nome": {
+                            "type": "string"
+                        },
+                        "email": {
+                            "type": "string"
+                        },
+                        "cpf":{
+                            "type": "string"
+                        },
+                        "senha":{
+                            "type": "string"
+                        },
+                        "confirmar_senha":{
+                            "type": "string"
+                        },
+                        "data_nascimento":{
+                            "type": "string"
+                        },
+                        "permissao_email":{
+                            "type": "boolean"
+                        },
+                        "ddd":{
+                            "type": "string"
+                        },
+                        "numero":{
+                            "type": "string"
+                        },
+                        "id_tipo_telefone":{
+                            "type": "number"
+                        },
+                        "id_genero": {
+                            "type": "number"
+                        },
+                        "ids_stacks":{
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        },
+                        "ids_habilidades":{
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                },
+                "DeveloperLogin":{
+                    "type": "object",
+                    "properties": {
+                        "login": {
+                            "type": "string"
+                        },
+                        "senha": {
+                            "type": "string"
+                        }
+                    }
+                }
+        }
+    }
+}
